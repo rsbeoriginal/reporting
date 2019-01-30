@@ -1,7 +1,7 @@
 package com.game.reporting.services.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.game.reporting.dto.UserGlobalScoreDTO;
+import com.game.reporting.dto.UserScoreDTO;
 import com.game.reporting.services.ReportingServices;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,9 +16,13 @@ import java.util.List;
 
 @Service
 public class ReportingServicesImpl implements ReportingServices {
-    public List<UserGlobalScoreDTO> fetchScores(){
-        final String uri = "";
 
+    @Override
+    public List<UserScoreDTO> fetchScores(String contestId){
+        String uri = "http://demo2494511.mockable.io/testing";
+        if(!contestId.equals("global"))
+            uri+="/"+contestId;
+        System.out.println(uri);
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper mapper = new ObjectMapper();
         HttpHeaders headers=new HttpHeaders();
@@ -30,12 +34,12 @@ public class ReportingServicesImpl implements ReportingServices {
         System.out.println(entityResponse.toString());
         List scores = (List) entityResponse.getBody();
         Iterator iterator= scores.iterator();
-        List<UserGlobalScoreDTO> scoreDTOS = new ArrayList<>();
+        List<UserScoreDTO> scoreDTOS = new ArrayList<>();
         while (iterator.hasNext()) {
-            UserGlobalScoreDTO productDTO = mapper.convertValue(iterator.next(), UserGlobalScoreDTO.class);
+            UserScoreDTO productDTO = mapper.convertValue(iterator.next(), UserScoreDTO.class);
             scoreDTOS.add(productDTO);
         }
-        for(UserGlobalScoreDTO dto: scoreDTOS){
+        for(UserScoreDTO dto: scoreDTOS){
             System.out.println(dto.getScore());
         }
         return scoreDTOS;

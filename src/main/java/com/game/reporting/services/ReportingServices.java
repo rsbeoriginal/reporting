@@ -1,9 +1,9 @@
 package com.game.reporting.services;
 
-import com.game.reporting.dto.UserGlobalScoreDTO;
+import com.game.reporting.dto.UserScoreDTO;
 
 import java.util.List;
 
 public interface ReportingServices {
-    List<UserGlobalScoreDTO> fetchScores();
+    List<UserScoreDTO> fetchScores(String contestId);
 }
