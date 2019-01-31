@@ -1,8 +1,6 @@
 package com.game.reporting.dto;
 
-public class UserScoreDTO {
-    private String contestId;
-    private String contestName;
+public class UserGlobalScoreDTO {
     private String userId;
     private String userName;
     private Integer score;
@@ -29,21 +27,5 @@ public class UserScoreDTO {
 
     public void setScore(Integer score) {
         this.score = score;
-    }
-
-    public String getContestId() {
-        return contestId;
-    }
-
-    public void setContestId(String contestId) {
-        this.contestId = contestId;
-    }
-
-    public String getContestName() {
-        return contestName;
-    }
-
-    public void setContestName(String contestName) {
-        this.contestName = contestName;
     }
 }
