@@ -1,7 +1,11 @@
-package com.game.reporting.dto;
+package com.game.reporting.entity;
 
-public class UserScoreDTO {
-    private String contestId;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity(name = "UserScore")
+public class UserScore {
+    @Id
     private String userId;
     private String userName;
     private Integer score;
@@ -28,13 +32,5 @@ public class UserScoreDTO {
 
     public void setScore(Integer score) {
         this.score = score;
-    }
-
-    public String getContestId() {
-        return contestId;
-    }
-
-    public void setContestId(String contestId) {
-        this.contestId = contestId;
     }
 }
