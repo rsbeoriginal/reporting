@@ -1,9 +1,9 @@
 package com.game.reporting.dto;
 
-public class ContestDTO {
+public class ContestSubscriberDTO {
     private String contestId;
     private String contestName;
-    private Integer subscriberCount;
+    private String userId;
     private String type;
     private boolean active;
 
@@ -23,12 +23,12 @@ public class ContestDTO {
         this.contestName = contestName;
     }
 
-    public Integer getSubscriberCount() {
-        return subscriberCount;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setSubscriberCount(Integer subscriberCount) {
-        this.subscriberCount = subscriberCount;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getType() {

@@ -1,8 +1,9 @@
 package com.game.reporting.services;
 
-import com.game.reporting.dto.ContestDTO;
+import com.game.reporting.dto.ContestSubscriberCountsDTO;
+import com.game.reporting.dto.ContestSubscriberDTO;
 import com.game.reporting.dto.UserGlobalScoreDTO;
-import com.game.reporting.dto.UserScoreDTO;
+import com.game.reporting.entity.ContestSubscriber;
 import com.game.reporting.entity.UserScore;
 
 import java.util.List;
@@ -18,5 +19,7 @@ public interface ReportingServices {
 
     List<UserGlobalScoreDTO> fetchGlobalScores();
 
-    List<ContestDTO> getContestSummary();
+    List<ContestSubscriberCountsDTO> getContestSummary();
+
+    void addNewSubscriber(ContestSubscriberDTO contestSubscriberDTO);
 }

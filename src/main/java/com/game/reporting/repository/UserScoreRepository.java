@@ -15,6 +15,6 @@ public interface UserScoreRepository extends CrudRepository<UserScore, String> {
     @Query("FROM UserScore us WHERE contestId=?1 ORDER BY us.score DESC")
     List<UserScore> getScores(String contestId);
 
-    @Query("SELECT userId, SUM(scores) FROM UserScore GROUP BY userId")
+    @Query("SELECT new com.game.reporting.dto.UserGlobalScoreDTO(userId, SUM(score) as totalScore, count(contestId)) FROM UserScore GROUP BY userId ORDER BY totalScore DESC")
     List<UserGlobalScoreDTO> getScoresGlobal();
 }

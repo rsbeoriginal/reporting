@@ -1,13 +1,15 @@
 package com.game.reporting.services.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.game.reporting.dto.ContestDTO;
+import com.game.reporting.dto.ContestSubscriberCountsDTO;
+import com.game.reporting.dto.ContestSubscriberDTO;
 import com.game.reporting.dto.UserGlobalScoreDTO;
-import com.game.reporting.dto.UserScoreDTO;
+import com.game.reporting.entity.ContestSubscriber;
 import com.game.reporting.entity.UserScore;
+import com.game.reporting.repository.ContestSubscriberRepository;
 import com.game.reporting.repository.UserScoreRepository;
 import com.game.reporting.services.ReportingServices;
-import org.apache.catalina.User;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,37 +26,9 @@ public class ReportingServicesImpl implements ReportingServices {
     @Autowired
     UserScoreRepository userScoreRepository;
 
-//    @Override
-//    public List<UserScoreDTO> fetchScores(String contestId){
-//        final String uri = "http://demo2494511.mockable.io/testing";
-//        RestTemplate restTemplate = new RestTemplate();
-//        ObjectMapper mapper = new ObjectMapper();
-//        HttpHeaders headers=new HttpHeaders();
-//        headers.set("Content-Type", "application/json");
-//        HttpEntity requestEntity=new HttpEntity(headers);
-//
-//        ResponseEntity<?> entityResponse = restTemplate.exchange(uri, HttpMethod.GET, requestEntity, List.class);
-//
-//        System.out.println(entityResponse.toString());
-//        List scores = (List) entityResponse.getBody();
-//        Iterator iterator= scores.iterator();
-//        List<UserScoreDTO> scoreDTOS = new ArrayList<>();
-//        while (iterator.hasNext()) {
-//            UserScoreDTO userScoreDTO = mapper.convertValue(iterator.next(), UserScoreDTO.class);
-//            userScoreDTO.setUserName(getUserName(userScoreDTO.getUserId()));
-//            scoreDTOS.add(userScoreDTO);
-//        }
-//        for(UserScoreDTO dto: scoreDTOS){
-//            System.out.println(dto.getScore());
-//        }
-////        Collections.sort(scoreDTOS, new Comparator<UserScoreDTO>() {
-////            @Override
-////            public int compare(UserScoreDTO o1, UserScoreDTO o2) {
-////                return Integer.compare(o1.getScore(), o2.getScore());
-////            }
-////        });
-//        return scoreDTOS;
-//    }
+    @Autowired
+    ContestSubscriberRepository contestSubscriberRepository;
+
 
     @Override
     public List<UserScore> fetchScores(String contestId){
@@ -85,36 +59,14 @@ public class ReportingServicesImpl implements ReportingServices {
     }
 
     @Override
-    public List<ContestDTO> getContestSummary() {
-        final String uriDynamic = "http://demo2494511.mockable.io/testing";
-        final String uriStatic = "http://demo2494511.mockable.io/testing";
+    public List<ContestSubscriberCountsDTO> getContestSummary() {
+        return contestSubscriberRepository.getSummary();
+    }
 
-        RestTemplate restTemplate = new RestTemplate();
-        ObjectMapper mapper = new ObjectMapper();
-        HttpHeaders headers=new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        HttpEntity requestEntity=new HttpEntity(headers);
-        List<ContestDTO> contestDTOS = new ArrayList<>();
-
-        //Dynamic
-        ResponseEntity<?> entityResponse = restTemplate.exchange(uriDynamic, HttpMethod.GET, requestEntity, List.class);
-        List contests = (List) entityResponse.getBody();
-        Iterator iterator= contests.iterator();
-        while (iterator.hasNext()) {
-            ContestDTO contestDTO = mapper.convertValue(iterator.next(), ContestDTO.class);
-            contestDTO.setType("Dynamic");
-            contestDTOS.add(contestDTO);
-        }
-
-        //Static
-        entityResponse = restTemplate.exchange(uriStatic, HttpMethod.GET, requestEntity, List.class);
-        contests = (List) entityResponse.getBody();
-        iterator= contests.iterator();
-        while (iterator.hasNext()) {
-            ContestDTO contestDTO = mapper.convertValue(iterator.next(), ContestDTO.class);
-            contestDTO.setType("Static");
-            contestDTOS.add(contestDTO);
-        }
-        return contestDTOS;
+    @Override
+    public void addNewSubscriber(ContestSubscriberDTO contestSubscriberDTO) {
+        ContestSubscriber contestSubscriber = new ContestSubscriber();
+        BeanUtils.copyProperties(contestSubscriberDTO, contestSubscriber);
+        contestSubscriberRepository.save(contestSubscriber);
     }
 }

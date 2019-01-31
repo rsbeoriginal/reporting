@@ -5,7 +5,7 @@ public class UserScoreDTO {
     private String contestName;
     private String userId;
     private String userName;
-    private Integer score;
+    private double score;
 
     public String getUserId() {
         return userId;
@@ -23,11 +23,11 @@ public class UserScoreDTO {
         this.userName = userName;
     }
 
-    public Integer getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(double score) {
         this.score = score;
     }
 
